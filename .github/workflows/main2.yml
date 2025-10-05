@@ -1,0 +1,32 @@
+name: Cache Test Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (or any runtime you want)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Step 3: Cache dependencies
+      - name: prime-cache-8307b7d
+        id: cache-step
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: cache-8307b7d
+
+      # Step 4: Show cache result
+      - name: Echo cache result
+        run: echo "Cache hit? ${{ steps.cache-step.outputs.cache-hit }}"
